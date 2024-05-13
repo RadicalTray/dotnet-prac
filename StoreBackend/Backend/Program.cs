@@ -7,8 +7,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-DotNetEnv.Env.Load();
-
 var config =
     new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -29,10 +27,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-Console.WriteLine("\nEntityFramework ----------\n");
-Backend.Service.SupplierService.GetAll();
-Console.WriteLine("\nNpgsql -------------------\n");
-Backend.Service.SupplierService.GetAllNpgsql();
 
 app.Run();
