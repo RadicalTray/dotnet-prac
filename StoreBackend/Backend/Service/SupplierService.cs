@@ -6,6 +6,7 @@ namespace Backend.Service;
 public static class SupplierService {
 
     // Using Npgsql.EntityFrameworkCore.PostgreSQL
+    // See also class SupplierContext
     public static List<Supplier>? GetAll() {
         using (var context = new SupplierContext()) {
             Console.WriteLine(context.Model.ToDebugString());
@@ -22,8 +23,11 @@ public static class SupplierService {
         }
     }
 
+    // Using Npgsql
     public static async void GetAllNpgsql() {
-        await using var dataSource = Npgsql.NpgsqlDataSource.Create("Host=localhost;Port=5432;Database=test;Username=postgres;Password=1234");
+        string connStr = "Host=localhost;Port=5432;Database=test;Username=postgres;Password=1234";
+        await using var dataSource = Npgsql.NpgsqlDataSource.Create(connStr);
+
         await using (var command = dataSource.CreateCommand("SELECT * FROM suppliers"))
         await using (var reader = await command.ExecuteReaderAsync()) {
             while (await reader.ReadAsync()) {
