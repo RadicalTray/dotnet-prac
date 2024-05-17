@@ -9,5 +9,28 @@ namespace Backend.Controllers;
 [Route("[controller]")]
 public class SuppliersController : ControllerBase {
     [HttpGet]
-    public List<Supplier>? GetAll() => SupplierService.GetAll();
+    public ActionResult<List<Supplier>> GetAll(string? name) {
+        if (name == null) {
+            name = "";
+        }
+
+        List<Supplier> suppliers = SupplierService.GetAll(name);
+
+        if (suppliers.Count == 0) {
+            return NoContent();
+        }
+
+        return suppliers;
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<Supplier> Get(string id) {
+        Supplier? supplier = SupplierService.Get(id);
+
+        if (supplier == null) {
+            return NoContent();
+        }
+
+        return supplier;
+    }
 }
