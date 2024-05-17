@@ -5,7 +5,9 @@ namespace Backend.Service;
 
 public static class SupplierService {
 
-    public static List<Supplier> GetAll(string name) {
+    public static List<Supplier> GetAll(string? name) {
+        if (name == null) { name = ""; }
+
         using (var context = new StoreContext()) {
             return context.suppliers.Where<Supplier>(s => s.Name.Contains(name)).ToList<Supplier>();
         }

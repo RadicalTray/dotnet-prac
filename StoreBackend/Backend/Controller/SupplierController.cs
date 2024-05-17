@@ -10,10 +10,6 @@ namespace Backend.Controllers;
 public class SuppliersController : ControllerBase {
     [HttpGet]
     public ActionResult<List<Supplier>> GetAll(string? name) {
-        if (name == null) {
-            name = "";
-        }
-
         List<Supplier> suppliers = SupplierService.GetAll(name);
 
         if (suppliers.Count == 0) {
